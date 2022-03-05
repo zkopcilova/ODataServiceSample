@@ -13,18 +13,18 @@ namespace AuthenticationUtility
         public static ClientConfiguration OneBox = new ClientConfiguration()
         {
             // You only need to populate this section if you are logging on via a native app. For Service to Service scenarios in which you e.g. use a service principal you don't need that.
-            UriString = "https://msdemo.cloudax.dynamics.com/",
+            UriString = "https://msdemod365fo3b81909fd1afb61edevaos.cloudax.dynamics.com/",
             UserName = "nobody@on.the.net",
             // Insert the correct password here for the actual test.
             Password = "",
 
             // You need this only if you logon via service principal using a client secret. See: https://docs.microsoft.com/en-us/dynamics365/unified-operations/dev-itpro/data-entities/services-home-page to get more data on how to populate those fields.
             // You can find that under AAD in the azure portal
-            ActiveDirectoryResource = "https://msdemo.cloudax.dynamics.com", // Don't have a trailing "/". Note: Some of the sample code handles that issue.
-            ActiveDirectoryTenant = "https://login.windows.net/on.the.net", // Some samples: https://login.windows.net/yourtenant.onmicrosoft.com, https://login.windows.net/microsoft.com
-            ActiveDirectoryClientAppId = "XXXXXX",
+            ActiveDirectoryResource = "https://msdemod365fo3b81909fd1afb61edevaos.cloudax.dynamics.com", // Don't have a trailing "/". Note: Some of the sample code handles that issue.
+            ActiveDirectoryTenant = "https://login.windows.net/autocont.cz", // Some samples: https://login.windows.net/yourtenant.onmicrosoft.com, https://login.windows.net/microsoft.com
+            ActiveDirectoryClientAppId = "a3c93dee-9093-4d33-ab2a-c92a9b7c8100", 
             // Insert here the application secret when authenticate with AAD by the application
-            ActiveDirectoryClientAppSecret = "YYYYYY",
+            ActiveDirectoryClientAppSecret = "DBy7Q~oTrJq7MB4T_VPJPCiozjnnbFj6NNitx", 
 
             // Change TLS version of HTTP request from the client here
             // Ex: TLSVersion = "1.2"

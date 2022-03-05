@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
 using AuthenticationUtility;
 using Microsoft.OData.Client;
@@ -16,6 +17,7 @@ namespace ODataConsoleApplication
             // https://blogs.msdn.microsoft.com/odatateam/2014/03/11/tutorial-sample-how-to-use-odata-client-code-generator-to-generate-client-side-proxy-class/
 
             //TODO: Force TLS 1.2
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             Uri oDataUri = new Uri(ODataEntityPath, UriKind.Absolute);
             var context = new Resources(oDataUri);
@@ -27,8 +29,24 @@ namespace ODataConsoleApplication
             });
 
 
-           //TODO: Read OData enity and do some action on it
+            //TODO: Read OData entity and do some action on it
+            //DataServiceQuery entityObject = context.SalesOrderLines.AddQueryOption("$skip", 10000).AddQueryOption("$top", 10000);
+            DataServiceQuery entityObject = context.SalesOrderLines.AddQueryOption("$top", 10);
 
+            string lineAmt;
+            double beginWithOne = 0;
+
+            foreach (SalesOrderLine line in entityObject)
+            { 
+                Console.WriteLine("{0}", line.LineAmount);
+                lineAmt = line.LineAmount.ToString();
+                if (lineAmt[0] == '1')
+                    beginWithOne++;
+            }
+
+            double beginWithOneRatio = (beginWithOne/10)*100;
+
+            Console.WriteLine("Jedničkou začíná {0} % řádků:", beginWithOneRatio);
             Console.ReadLine();
         }
     }
