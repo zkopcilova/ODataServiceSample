@@ -32,8 +32,8 @@ namespace ODataConsoleApplication
 
             //TODO: Read OData entity and do some action on it
 
-            //var linesTotal = context.SalesOrderLines.Count();
-            double linesTotal = 1000;
+            double linesTotal = (double)context.SalesOrderLines.Count();
+            //double linesTotal = 5000; //for running on a smaller part of data sample
 
             //temporary variables
             DataServiceQuery data;
@@ -54,7 +54,7 @@ namespace ODataConsoleApplication
 
             DataFunctions.CompareBenford(digits, linesTotal);
 
-            //DataFunctions.TestBenford(digits, linesTotal);
+            DataFunctions.TestBenford(digits, linesTotal);
 
             Console.ReadLine();
         }

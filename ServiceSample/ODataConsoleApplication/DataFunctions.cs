@@ -86,23 +86,39 @@ namespace ODataConsoleApplication
 
         public static void TestBenford(FirstDigitDistribution digits, double samples)
         {
-            
+            //Pearson's chi-squared test (https://en.wikipedia.org/wiki/Chi-squared_test | https://cs.wikipedia.org/wiki/Test_dobr%C3%A9_shody)
+            double critical = 15.507; //chi-squared distribution for 8 degrees of freedom and p-value 0.05
+
+            double chi = Math.Pow(digits.One - 0.301 * samples, 2) / (samples * 0.301);
+            chi += Math.Pow(digits.Two - 0.176 * samples, 2) / (samples * 0.176);
+            chi += Math.Pow(digits.Three - 0.125 * samples, 2) / (samples * 0.125);
+            chi += Math.Pow(digits.Four - 0.097 * samples, 2) / (samples * 0.097);
+            chi += Math.Pow(digits.Five - 0.079 * samples, 2) / (samples * 0.079);
+            chi += Math.Pow(digits.Six - 0.067 * samples, 2) / (samples * 0.067);
+            chi += Math.Pow(digits.Seven - 0.058 * samples, 2) / (samples * 0.058);
+            chi += Math.Pow(digits.Eight - 0.051 * samples, 2) / (samples * 0.051);
+            chi += Math.Pow(digits.Nine - 0.046 * samples, 2) / (samples * 0.046);
+
+            if (chi < critical)
+                Console.WriteLine("\nSe spolehlivostí 95% nelze říci, že by data byla uměle upravena.");
+            else
+                Console.WriteLine("\nData se spolehlivostí 95% nesplňují Benfordův zákon.");
         }
 
         public static void CompareBenford(FirstDigitDistribution digits, double samples)
         {
-            Console.WriteLine("Formát: číslice / očekávané zastoupení / reálné zastoupení");
-            Console.WriteLine("Na {0} vzorcích byly zjištěny následující výsledky:\n", samples);
+            Console.WriteLine("Na {0} vzorcích byly zjištěny následující výsledky:", samples);
+            Console.WriteLine("[číslice / očekávané zastoupení / reálné zastoupení]\n");
 
-            Console.WriteLine("1 / 30,1% / " + (digits.One / samples) * 100 + "%");
-            Console.WriteLine("2 / 17,6% / " + (digits.Two / samples) * 100 + "%");
-            Console.WriteLine("3 / 12,5% / " + (digits.Three / samples) * 100 + "%");
-            Console.WriteLine("4 /  9,7% / " + (digits.Four / samples) * 100 + "%");
-            Console.WriteLine("5 /  7,9% / " + (digits.Five / samples) * 100 + "%");
-            Console.WriteLine("6 /  6,7% / " + (digits.Six / samples) * 100 + "%");
-            Console.WriteLine("7 /  5,8% / " + (digits.Seven / samples) * 100 + "%");
-            Console.WriteLine("8 /  5,1% / " + (digits.Eight / samples) * 100 + "%");
-            Console.WriteLine("9 /  4,6% / " + (digits.Nine / samples) * 100 + "%");
+            Console.WriteLine("1  / 30,1% / {0: 0.0}%", (digits.One / samples) * 100);
+            Console.WriteLine("2  / 17,6% / {0: 0.0}%", (digits.Two / samples) * 100);
+            Console.WriteLine("3  / 12,5% / {0: 0.0}%", (digits.Three / samples) * 100);
+            Console.WriteLine("4  / 9,7%  / {0: 0.0}%", (digits.Four / samples) * 100);
+            Console.WriteLine("5  / 7,9%  / {0: 0.0}%", (digits.Five / samples) * 100);
+            Console.WriteLine("6  / 6,7%  / {0: 0.0}%", (digits.Six / samples) * 100);
+            Console.WriteLine("7  / 5,8%  / {0: 0.0}%", (digits.Seven / samples) * 100);
+            Console.WriteLine("8  / 5,1%  / {0: 0.0}%", (digits.Eight / samples) * 100);
+            Console.WriteLine("9  / 4,6%  / {0: 0.0}%", (digits.Nine / samples) * 100);
 
         }
     }
