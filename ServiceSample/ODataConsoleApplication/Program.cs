@@ -31,30 +31,30 @@ namespace ODataConsoleApplication
 
 
             //TODO: Read OData entity and do some action on it
-            //DataServiceQuery entityObject = context.SalesOrderLines.AddQueryOption("$skip", 10000).AddQueryOption("$top", 10000);
-            /*DataServiceQuery entityObject = DataFunctions.ReadFirst(context);
+
+            //var linesTotal = context.SalesOrderLines.Count();
+            double linesTotal = 1000;
+
+            //temporary variables
+            DataServiceQuery data;
+            FirstDigitDistribution digits = new FirstDigitDistribution();
+            int topLines = 10000;
             
-            string lineAmt;
-            double beginWithOne = 0;
 
-            foreach (SalesOrderLine line in entityObject)
+            for (int skipLines = 0; skipLines < linesTotal; skipLines += 10000)
             {
-                lineAmt = line.LineAmount.ToString();
-                if (lineAmt[0] == '1')
-                    beginWithOne++;
+                //Only read remaining number of lines (<10,000) during the last iteration
+                if (linesTotal - skipLines < 10000)
+                    topLines = (int)linesTotal - skipLines;
+
+                data = DataFunctions.ReadSalesOrderLines(context, skipLines, topLines);
+                DataFunctions.GetFirstDigits(data, digits);
+
             }
 
-            Console.WriteLine("Jedničkou začíná {0} % řádků.", (beginWithOne/100)*100);*/
+            DataFunctions.CompareBenford(digits, linesTotal);
 
-            var linesTotal = context.SalesOrderLines.Count();
-            Console.WriteLine(linesTotal + " řádků");
-            int skipLines = 0;
-
-            DataServiceQuery entityObject = DataFunctions.ReadSalesOrderLines(context, skipLines, 8);
-            foreach (SalesOrderLine line in entityObject)
-            {
-                Console.WriteLine(line.LineAmount);
-            }
+            //DataFunctions.TestBenford(digits, linesTotal);
 
             Console.ReadLine();
         }
