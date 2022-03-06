@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using AuthenticationUtility;
 using Microsoft.OData.Client;
@@ -31,22 +32,30 @@ namespace ODataConsoleApplication
 
             //TODO: Read OData entity and do some action on it
             //DataServiceQuery entityObject = context.SalesOrderLines.AddQueryOption("$skip", 10000).AddQueryOption("$top", 10000);
-            DataServiceQuery entityObject = context.SalesOrderLines.AddQueryOption("$top", 10);
-
+            /*DataServiceQuery entityObject = DataFunctions.ReadFirst(context);
+            
             string lineAmt;
             double beginWithOne = 0;
 
             foreach (SalesOrderLine line in entityObject)
-            { 
-                Console.WriteLine("{0}", line.LineAmount);
+            {
                 lineAmt = line.LineAmount.ToString();
                 if (lineAmt[0] == '1')
                     beginWithOne++;
             }
 
-            double beginWithOneRatio = (beginWithOne/10)*100;
+            Console.WriteLine("Jedničkou začíná {0} % řádků.", (beginWithOne/100)*100);*/
 
-            Console.WriteLine("Jedničkou začíná {0} % řádků:", beginWithOneRatio);
+            var linesTotal = context.SalesOrderLines.Count();
+            Console.WriteLine(linesTotal + " řádků");
+            int skipLines = 0;
+
+            DataServiceQuery entityObject = DataFunctions.ReadSalesOrderLines(context, skipLines, 8);
+            foreach (SalesOrderLine line in entityObject)
+            {
+                Console.WriteLine(line.LineAmount);
+            }
+
             Console.ReadLine();
         }
     }
